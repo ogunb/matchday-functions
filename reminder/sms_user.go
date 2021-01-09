@@ -1,7 +1,7 @@
-package main
+package reminder
 
 import "fmt"
 
-func main() {
+func HelloHTTP() {
 	fmt.Println("V")
 }
