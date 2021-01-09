@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import reminder "github.com/ogunb/matchday-functions/reminder"
 
 func main() {
-	fmt.Println("HELLO WORLD");
+	reminder.Hello();
 }
