@@ -1,7 +1,7 @@
 package main
 
-import "github.com/ogunb/matchday-functions/reminder"
+import "github.com/ogunb/matchday-functions/hellohttp"
 
 func main() {
-	reminder.HelloHTTP()
+	hellohttp.HelloHTTP("a", "b")
 }
