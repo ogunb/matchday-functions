@@ -1,0 +1,9 @@
+api:
+  sports:
+    url: "https://www.thesportsdb.com/api/v1/json/1"
+
+user:
+  team:
+    id: ""
+  phone: ""
+  email: ""
