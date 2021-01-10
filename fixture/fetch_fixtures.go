@@ -65,6 +65,10 @@ func fetchNextFiveGames() []Fixture {
 // FetchFixtures fetches next 5 events for given team
 func FetchFixtures(ctx context.Context, m PubSubMessage) error {
 	fixtures := fetchNextFiveGames()
-	fmt.Println(fixtures)
+
+	for _, fixture := range fixtures {
+		fmt.Println(fixture);
+	}
+
 	return nil
 }
