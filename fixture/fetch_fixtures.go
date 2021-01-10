@@ -8,20 +8,12 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/ogunb/matchday-functions/fixture/model"
 	"github.com/ogunb/matchday-functions/fixture/queue"
 )
 
 // PubSubMessage is the payload of a Pub/Sub event.
 type PubSubMessage struct {}
-
-type Match struct {
-	Event     string `json:"strEvent"`
-	Timestamp string `json:"strTimestamp"`
-}
-
-type EventsResponse struct {
-	Events []Match `json:"events"`
-}
 
 const sportsURL = "https://www.thesportsdb.com/api/v1/json/1"
 const fixtureEndpoint = "eventsnext.php"
@@ -33,7 +25,7 @@ func generateURL() string {
 	return fmt.Sprintf("%s/%s?id=%s", sportsURL, fixtureEndpoint, teamID)
 }
 
-func fetchNextFiveMatches() []Match {
+func fetchNextFiveMatches() []model.Match {
 	url := generateURL()
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -55,7 +47,7 @@ func fetchNextFiveMatches() []Match {
 		log.Fatal(readErr)
 	}
 
-	fixture := EventsResponse{}
+	fixture := model.EventsResponse{}
 	jsonErr := json.Unmarshal(body, &fixture)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)

@@ -3,13 +3,13 @@ package queue
 import (
 	"log"
 
-	fixture "github.com/ogunb/matchday-functions/fixture"
+	"github.com/ogunb/matchday-functions/fixture/model"
 )
 
 func PurgeCloudQueue() {
 	log.Println("TODO: PURGE CLOUD QUEUE")
 }
 
-func AddToCloudQueue(match fixture.Match) {
+func AddToCloudQueue(match model.Match) {
 	log.Println(match)
 }
