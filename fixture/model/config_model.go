@@ -5,5 +5,5 @@ type Config struct {
 	Location                string `yaml:"location"`
 	Queue                   string `yaml:"queue"`
 	HandlerFunctionEndpoint string `yaml:"handlerFunctionEndpoint"`
-	ServiceAccountEmail      string `yaml:"serviceAccountEmail"`
+	ServiceAccountEmail     string `yaml:"serviceAccountEmail"`
 }

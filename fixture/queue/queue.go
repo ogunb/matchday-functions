@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"log"
 
+	cloudtasks "cloud.google.com/go/cloudtasks/apiv2"
 	"github.com/ogunb/matchday-functions/fixture/config"
-	cloudtasks "google.golang.org/api/cloudtasks/v2"
+	tasks "google.golang.org/genproto/googleapis/cloud/tasks/v2"
 )
 
 func PurgeCloudQueue() {
@@ -17,7 +18,7 @@ func AddToCloudQueue() {
 	ctx := context.Background()
 	log.Println(ctx)
 
-	cloudtasksService, err := cloudtasks.NewService(ctx)
+	client, err := cloudtasks.NewClient(ctx)
 
 	if err != nil {
 		log.Fatal(err)
@@ -25,25 +26,32 @@ func AddToCloudQueue() {
 
 	configs := config.GetConfig()
 
-	name := fmt.Sprintf("projects/%s/locations/%s/queues/%s", configs.ProjectID, configs.Location, configs.Queue)
+	parent := fmt.Sprintf("projects/%s/locations/%s/queues/%s", configs.ProjectID, configs.Location, configs.Queue)
 
-	req := &cloudtasks.CreateTaskRequest{
-		Task: &cloudtasks.Task{
-			HttpRequest: &cloudtasks.HttpRequest{
-				HttpMethod: "POST",
-				Url: configs.HandlerFunctionEndpoint,
-				OidcToken: &cloudtasks.OidcToken{
-					ServiceAccountEmail: configs.ServiceAccountEmail,
+	req := &tasks.CreateTaskRequest{
+		Parent: parent,
+		Task: &tasks.Task{
+			MessageType: &tasks.Task_HttpRequest{
+				HttpRequest: &tasks.HttpRequest{
+					HttpMethod: tasks.HttpMethod_POST,
+					Url:        configs.HandlerFunctionEndpoint,
+					AuthorizationHeader: &tasks.HttpRequest_OidcToken{
+						OidcToken: &tasks.OidcToken{
+							ServiceAccountEmail: configs.ServiceAccountEmail,
+						},
+					},
 				},
 			},
 		},
 	}
 
-	fmt.Println(req.Task.HttpRequest.OidcToken.ServiceAccountEmail)
-
 	// req.Task.GetAppEngineHttpRequest().Body = []byte(message)
 
-	createdTask := cloudtasksService.Projects.Locations.Queues.Tasks.Create(name, req)
+	createdTask, err := client.CreateTask(ctx, req)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	log.Println(createdTask)
 }
