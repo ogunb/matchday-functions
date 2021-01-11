@@ -6,17 +6,18 @@ import (
 	"log"
 
 	cloudtasks "cloud.google.com/go/cloudtasks/apiv2"
-	"github.com/ogunb/matchday-functions/fixture/config"
 	tasks "google.golang.org/genproto/googleapis/cloud/tasks/v2"
+
+	"github.com/ogunb/matchday-functions/fixture/config"
+	"github.com/ogunb/matchday-functions/fixture/model"
 )
 
 func PurgeCloudQueue() {
 	log.Println("TODO: PURGE CLOUD QUEUE")
 }
 
-func AddToCloudQueue() {
+func AddToCloudQueue(match model.Match) {
 	ctx := context.Background()
-	log.Println(ctx)
 
 	client, err := cloudtasks.NewClient(ctx)
 
