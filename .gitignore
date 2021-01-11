@@ -15,7 +15,7 @@
 # vendor/
 
 # Env
-*/env.*
+*/.env
 
 # Credentials
 */credentials.*

@@ -13,7 +13,7 @@ import (
 )
 
 // PubSubMessage is the payload of a Pub/Sub event.
-type PubSubMessage struct {}
+type PubSubMessage struct{}
 
 const sportsURL = "https://www.thesportsdb.com/api/v1/json/1"
 const fixtureEndpoint = "eventsnext.php"
@@ -64,10 +64,10 @@ func FetchFixtures(ctx context.Context, m PubSubMessage) error {
 		log.Fatal("No event was found.")
 	}
 
-	queue.PurgeCloudQueue()
+	queue.PurgeQueue()
 
 	for _, fixture := range fixture {
-		queue.AddToCloudQueue(fixture)
+		queue.CreateTask(fixture)
 	}
 
 	return nil
