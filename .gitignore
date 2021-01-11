@@ -15,4 +15,7 @@
 # vendor/
 
 # Env
-resource/application.yml
+*/env.*
+
+# Credentials
+*/credentials.*
