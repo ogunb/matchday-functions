@@ -8,13 +8,15 @@ import (
 
 	cloudtasks "cloud.google.com/go/cloudtasks/apiv2"
 	tasks "google.golang.org/genproto/googleapis/cloud/tasks/v2"
+
+	"github.com/ogunb/matchday-functions/fixture/model"
 )
 
 func PurgeQueue() {
 	log.Println("TODO: PURGE CLOUD QUEUE")
 }
 
-func CreateTask() {
+func CreateTask(match model.Match) {
 	ctx := context.Background()
 	fmt.Println(os.Getenv("PROJECT_ID"))
 	client, err := cloudtasks.NewClient(ctx)
