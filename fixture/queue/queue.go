@@ -2,6 +2,7 @@ package queue
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -72,7 +73,13 @@ func CreateTask(match model.Match) {
 		},
 	}
 
-	req.Task.GetHttpRequest().Body = []byte(match.Event)
+	type body struct {
+		Message string `json:"message"`
+	}
+
+	req.Task.GetHttpRequest().Body, _ = json.Marshal(&body{
+		Message: match.Event,
+	})
 
 	_, createErr := client.CreateTask(ctx, req)
 
