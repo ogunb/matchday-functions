@@ -8,7 +8,7 @@ import (
 	"time"
 
 	cloudtasks "cloud.google.com/go/cloudtasks/apiv2"
-	tasks "google.golang.org/genproto/googleapis/cloud/tasks/v2"
+	"google.golang.org/genproto/googleapis/cloud/tasks/v2"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/ogunb/matchday-functions/fixture/model"
