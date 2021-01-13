@@ -25,7 +25,7 @@ func SmsUser(res http.ResponseWriter, req *http.Request) {
 
 	msgData := url.Values{}
 	msgData.Set("From", os.Getenv("TWILIO_NUMBER"))
-	msgData.Set("To", requestBody.Phone)
+	msgData.Set("To", os.Getenv("MY_NUMBER"))
 	msgData.Set("Body", requestBody.Message)
 	msgDataReader := *strings.NewReader(msgData.Encode())
 
