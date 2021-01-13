@@ -16,7 +16,7 @@ func SmsUser(res http.ResponseWriter, req *http.Request) {
 	accountSid := os.Getenv("TWILIO_SID")
 	authToken := os.Getenv("TWILIO_AUTH_TOKEN")
 	urlStr := "https://api.twilio.com/2010-04-01/Accounts/" + accountSid + "/Messages.json"
-
+	log.Println(req.Body)
 	var requestBody model.SmsRequest
 
 	if err := json.NewDecoder(req.Body).Decode(&requestBody); err != nil {
