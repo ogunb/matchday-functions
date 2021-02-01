@@ -44,6 +44,7 @@ func PurgeQueue() {
 	}
 
 	log.Println("Purged queue successfully.")
+	time.Sleep(2*time.Second)
 }
 
 func createTaskRequest(matchDate string, timeDiff int64) *tasks.CreateTaskRequest{
