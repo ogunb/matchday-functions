@@ -67,7 +67,9 @@ func FetchFixtures(ctx context.Context, m PubSubMessage) error {
 	queue.PurgeQueue()
 
 	for _, fixture := range fixture {
-		queue.CreateTask(fixture)
+		if fixture.Status == "Not Started" {
+			queue.CreateTask(fixture)
+		}
 	}
 
 	return nil
