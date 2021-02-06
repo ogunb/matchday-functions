@@ -30,10 +30,10 @@ def telegram_message_handler(request):
 
   message_handlers = {
     "/start": start_handler,
-    "/addTeam": add_team_handler,
+    "/addteam": add_team_handler,
   }
 
-  handler = message_handlers.get(command)
+  handler = message_handlers.get(command.lower())
 
   if not handler:
     # TODO
