@@ -41,7 +41,3 @@ def telegram_message_handler(request):
   handler(message["chat"].get('id'), arguments)
 
   return 'OK'
-
-
-telegram_message_handler({})
-
