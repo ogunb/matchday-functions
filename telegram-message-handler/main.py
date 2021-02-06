@@ -5,19 +5,16 @@ from commands.start import start_handler
 COMMAND_REGEX = re.compile("^\/\S+")
 
 def telegram_message_handler(request):
-  # TODO get_json
-  body = {
-    "update_id": "asdfiuha",
-    "message": {
-      "text": '/start asdfasdf'
-    }
-  }
+  body = request.get_json()
+
+  print(body)
 
   if not 'update_id' in body:
     print('Request is not from telegram.')
     return;
 
-  text = body.get('message').get('text')
+  message = body.get('message')
+  text = message.get('text')
   commandMatch = re.match(COMMAND_REGEX, text)
 
   if not commandMatch:
@@ -41,7 +38,9 @@ def telegram_message_handler(request):
     print('Not a valid command.')
     return
 
-  handler(1688953541, arguments)
+  handler(message["chat"].get('id'), arguments)
+
+  return 'OK'
 
 
 telegram_message_handler({})
