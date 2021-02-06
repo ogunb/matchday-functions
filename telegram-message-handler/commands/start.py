@@ -1,4 +1,4 @@
-from api.telegramApi import send_message
+from api.telegram_api import send_message
 
 def start_handler(chat_id, arguments):
   # TODO read from .md file.

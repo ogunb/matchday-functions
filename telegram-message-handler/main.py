@@ -1,6 +1,7 @@
 import re
 
 from commands.start import start_handler
+from commands.add_team import add_team_handler
 
 COMMAND_REGEX = re.compile("^\/\S+")
 
@@ -28,7 +29,8 @@ def telegram_message_handler(request):
   print(arguments)
 
   message_handlers = {
-    "/start": start_handler
+    "/start": start_handler,
+    "/addTeam": add_team_handler,
   }
 
   handler = message_handlers.get(command)
