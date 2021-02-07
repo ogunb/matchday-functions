@@ -10,20 +10,20 @@ def telegram_message_handler(request):
 
   print(body)
 
-  if not 'update_id' in body:
-    print('Request is not from telegram.')
+  if not "update_id" in body:
+    print("Request is not from telegram.")
     return;
 
-  message = body.get('message')
-  text = message.get('text')
+  message = body.get("message")
+  text = message.get("text")
   commandMatch = re.match(COMMAND_REGEX, text)
 
   if not commandMatch:
-    print('No command was provided.')
+    print("No command was provided.")
     return
 
   command = commandMatch.group()
-  arguments = re.sub(COMMAND_REGEX, "", text).strip()
+  arguments = re.sub(COMMAND_REGEX, "", text).strip().split("")
 
   print(command)
   print(arguments)
@@ -37,9 +37,12 @@ def telegram_message_handler(request):
 
   if not handler:
     # TODO
-    print('Not a valid command.')
+    print("Not a valid command.")
     return
 
-  handler(message["chat"].get('id'), arguments)
+  handler(message["chat"].get("id"), arguments)
 
-  return 'OK'
+  return "OK"
+
+
+add_team_handler(1688953541, ["asdfiuasgdhufyaf"])
