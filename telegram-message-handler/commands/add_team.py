@@ -4,7 +4,7 @@ from api.sportsdb_api import fetch_teams
 import models.team
 
 def add_team_handler(chat_id, arguments):
-  team_name = arguments[0] if arguments and len(arguments) > 0 else None
+  team_name = arguments[0] if arguments and len(arguments) > 0 else ""
 
   if not len(team_name) > 3:
     print("Less then four letters on team name.")
