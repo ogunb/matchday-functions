@@ -4,6 +4,8 @@ from commands.start import start_handler
 from commands.add_team import add_team_handler
 from commands.add_team_with_id import add_team_with_id_handler
 
+from api.telegram_api import answer_callback
+
 COMMAND_REGEX = re.compile("^\/\S+")
 
 def telegram_message_handler(request):
@@ -18,10 +20,11 @@ def telegram_message_handler(request):
   callback_query = body.get("callback_query")
   if callback_query:
     message = callback_query.get("message")
-    add_team_with_id_handler(
+    callback_text = add_team_with_id_handler(
       chat_id=message.get("chat").get("id"),
       arguments=[callback_query.get("data")]
     )
+    answer_callback(callback_query.get("id"), callback_text)
     return "OK"
 
   message = body.get("message")
