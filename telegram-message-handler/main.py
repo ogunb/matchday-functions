@@ -33,7 +33,7 @@ def telegram_message_handler(request):
     return
 
   command = command_match.group()
-  arguments = re.sub(COMMAND_REGEX, "", text).strip().split("")
+  arguments = re.sub(COMMAND_REGEX, "", text).strip().split()
 
   print(command)
   print(arguments)
