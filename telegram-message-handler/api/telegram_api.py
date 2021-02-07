@@ -40,7 +40,7 @@ def answer_callback(callback_id, text):
       "text": text,
     }
 
-    response = requests.post(SEND_MESSAGE_URL, json=request)
+    response = requests.post(ANSWER_CALLBACK_URL, json=request)
     response.raise_for_status()
 
     res = response.json()
