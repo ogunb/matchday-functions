@@ -1,1 +1,4 @@
-Run for local use `source ./credentials.sh`
+# Local use scripts
+
+- `source ./startupEnv.sh`
+- `source ./credentials.sh`
