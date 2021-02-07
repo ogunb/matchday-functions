@@ -2,6 +2,7 @@ import re
 
 from commands.start import start_handler
 from commands.add_team import add_team_handler
+from commands.add_team_with_id import add_team_with_id_handler
 
 COMMAND_REGEX = re.compile("^\/\S+")
 
@@ -14,15 +15,24 @@ def telegram_message_handler(request):
     print("Request is not from telegram.")
     return;
 
+  callback_query = body.get("callback_query")
+  if callback_query:
+    message = callback_query.get("message")
+    add_team_with_id_handler(
+      chat_id=message.get("chat").get("id"),
+      arguments=[callback_query.get("data")]
+    )
+    return
+
   message = body.get("message")
   text = message.get("text")
-  commandMatch = re.match(COMMAND_REGEX, text)
+  command_match = re.match(COMMAND_REGEX, text)
 
-  if not commandMatch:
+  if not command_match:
     print("No command was provided.")
     return
 
-  command = commandMatch.group()
+  command = command_match.group()
   arguments = re.sub(COMMAND_REGEX, "", text).strip().split("")
 
   print(command)
@@ -31,6 +41,7 @@ def telegram_message_handler(request):
   message_handlers = {
     "/start": start_handler,
     "/addteam": add_team_handler,
+    "/addteamwithid": add_team_with_id_handler,
   }
 
   handler = message_handlers.get(command.lower())
@@ -45,4 +56,4 @@ def telegram_message_handler(request):
   return "OK"
 
 
-add_team_handler(1688953541, ["asdfiuasgdhufyaf"])
+add_team_with_id_handler(1688953541, ["123"])
