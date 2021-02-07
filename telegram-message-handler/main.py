@@ -22,7 +22,7 @@ def telegram_message_handler(request):
       chat_id=message.get("chat").get("id"),
       arguments=[callback_query.get("data")]
     )
-    return
+    return "OK"
 
   message = body.get("message")
   text = message.get("text")
