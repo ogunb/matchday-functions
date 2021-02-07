@@ -1,7 +1,7 @@
 from api.telegram_api import send_message
 
 def add_team_with_id_handler(chat_id, arguments):
-  team_id = arguments[0] if len(arguments) > 0 else None
+  team_id = arguments[0] if arguments and len(arguments) > 0 else None
 
   if not team_id:
     print("No team id was provided.")
