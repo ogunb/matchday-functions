@@ -1,8 +1,12 @@
 from db.firestore import update_team_metadata
+
 from api.telegram_api import send_message
 from api.sportsdb_api import fetch_teams
+
 from models.team import generate_team
+
 from utils.inline_keyboard_inputs import generate_telegram_inline_keyboard_inputs
+from utils.string import generate_team_string
 
 def add_team_handler(chat_id, arguments):
   team_name = arguments[0] if arguments and len(arguments) > 0 else ""
@@ -26,7 +30,7 @@ def add_team_handler(chat_id, arguments):
 
     update_team_metadata(team);
     return generate_telegram_inline_keyboard_inputs(
-      text=f"{team.get('name')} ({team.get('formedAt')}) - {team.get('league')}",
+      text=generate_team_string(team),
       type="/addteamwithid",
       data=team.get("id"),
     )

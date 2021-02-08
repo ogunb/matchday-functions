@@ -46,9 +46,9 @@ def get_user_teams(chat_id):
   team_document_ref = db.collection("teams").where("followers", "array_contains", { "chat_id": chat_id })
   teams_steam = team_document_ref.stream()
 
-  def convert_snapshot_to_dict(team):
-    return team.to_dict()
+  def get_team_metadata(team):
+    return team.to_dict().get("metadata")
 
-  teams = list(map(convert_snapshot_to_dict, teams_steam))
+  teams = list(map(get_team_metadata, teams_steam))
 
   return teams;

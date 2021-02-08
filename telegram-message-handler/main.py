@@ -4,6 +4,9 @@ import json
 from commands.start import start_handler
 from commands.add_team import add_team_handler
 from commands.add_team_with_id import add_team_with_id_handler
+from commands.my_teams import my_teams_handler
+from commands.remove_team import remove_team_handler
+from commands.remove_team_with_id import remove_team_with_id_handler
 
 from api.telegram_api import answer_callback
 
@@ -13,8 +16,9 @@ MESSAGE_HANDLERS = {
   "/start": start_handler,
   "/addteam": add_team_handler,
   "/addteamwithid": add_team_with_id_handler,
-  # TODO: /myteams
-  # TODO: /removeteam id
+  "/myteams": my_teams_handler,
+  "/removeteam": remove_team_handler,
+  "/removeteamwithid": remove_team_with_id_handler,
 }
 
 def telegram_message_handler(request):
