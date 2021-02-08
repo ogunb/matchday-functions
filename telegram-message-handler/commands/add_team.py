@@ -17,7 +17,7 @@ def add_team_handler(chat_id, arguments):
     return
 
   print(f"Query for: {team_name}")
-
+  # TODO: query db first else:
   teams = fetch_teams(team_name)
 
   if not teams or not len(teams) > 0:
