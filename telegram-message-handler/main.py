@@ -38,7 +38,7 @@ def telegram_message_handler(request):
   callback_data = json.loads(callback_query.get("data")) if callback_query else None
 
   command = callback_data.get("type") if callback_data else command_match.group()
-  arguments = callback_data.get("data") if callback_data else re.sub(COMMAND_REGEX, "", text).strip().split()
+  arguments = [callback_data.get("data")] if callback_data else re.sub(COMMAND_REGEX, "", text).strip().split()
 
   print(command)
   print(arguments)
