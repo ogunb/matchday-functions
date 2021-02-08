@@ -1,7 +1,7 @@
-def createTeam(team):
+def create_team(team):
   return {
     "id": team["idTeam"],
     "name": team["strTeam"],
     "league": team["strLeague"],
-    "formedOn": team["intFormedYear"],
+    "formedAt": team["intFormedYear"],
   }

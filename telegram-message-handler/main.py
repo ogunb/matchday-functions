@@ -58,5 +58,3 @@ def telegram_message_handler(request):
 
   return "OK"
 
-
-add_team_with_id_handler(1688953541, ["123"])

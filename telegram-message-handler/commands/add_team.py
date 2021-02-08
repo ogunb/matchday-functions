@@ -1,3 +1,4 @@
+from db.firestore import update_team_metadata
 from api.telegram_api import send_message
 from api.sportsdb_api import fetch_teams
 
@@ -21,10 +22,12 @@ def add_team_handler(chat_id, arguments):
     return
 
   def generateTelegramInlineKeyboardInputs(t):
-    team = models.team.createTeam(t)
+    team = models.team.create_team(t)
+
+    update_team_metadata(team);
 
     return [{
-      "text": f"{team.get('name')} ({team.get('formedOn')}) - {team.get('league')}",
+      "text": f"{team.get('name')} ({team.get('formedAt')}) - {team.get('league')}",
       "callback_data": team.get("id")
     }]
 
