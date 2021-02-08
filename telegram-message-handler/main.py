@@ -31,7 +31,7 @@ def telegram_message_handler(request):
   text = message.get("text")
   command_match = re.match(COMMAND_REGEX, text)
 
-  if not callback_query or not command_match:
+  if not callback_query and not command_match:
     print("No command was provided.")
     return
 
