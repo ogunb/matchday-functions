@@ -55,5 +55,3 @@ def telegram_message_handler(request):
     answer_callback(callback_query.get("id"), callback_text)
 
   return "OK"
-
-add_team_handler(1688953541, ["Besiktas"])
