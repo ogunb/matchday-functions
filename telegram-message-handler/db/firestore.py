@@ -4,6 +4,12 @@ from models.user import generate_user
 
 db = firestore.Client()
 
+def get_team_metadata(team_id):
+  print(f"Getting {team_id}...")
+  team_document_ref = db.collection("teams").document(str(team_id))
+  team = team_document_ref.get(["metadata"]).to_dict()
+  return team.get("metadata")
+
 def update_team_metadata(team):
   team_document_ref = db.collection("teams").document(str(team.get("id")))
   team_document_ref.set(merge=True, document_data={
