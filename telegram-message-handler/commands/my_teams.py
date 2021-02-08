@@ -5,7 +5,7 @@ from db.firestore import get_user_teams
 from utils.string import generate_team_string
 from utils.inline_keyboard_inputs import generate_telegram_inline_keyboard_inputs
 
-def my_teams_handler(chat_id):
+def my_teams_handler(chat_id, arguments):
   teams = get_user_teams(chat_id)
 
   texts = list(map(generate_team_string, teams))
