@@ -31,7 +31,7 @@ def telegram_message_handler(request):
     return;
 
   callback_query = body.get("callback_query")
-  message = callback_query.get("message") if callback_query else body.get("message")
+  message = callback_query.get("message") if callback_query else body.get("message") or body.get("edited_message")
   text = message.get("text")
   command_match = re.match(COMMAND_REGEX, text)
 
