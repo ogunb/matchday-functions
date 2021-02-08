@@ -45,6 +45,8 @@ def telegram_message_handler(request):
     "/start": start_handler,
     "/addteam": add_team_handler,
     "/addteamwithid": add_team_with_id_handler,
+    # TODO: /myteams
+    # TODO: /removeteam id
   }
 
   handler = message_handlers.get(command.lower())
