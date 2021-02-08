@@ -41,3 +41,14 @@ def remove_follower(team_id, chat_id):
   team_document_ref.set(merge=True, document_data={
     u"followers": firestore.ArrayRemove([{ "chat_id": chat_id }])
   })
+
+def get_user_teams(chat_id):
+  team_document_ref = db.collection("teams").where("followers", "array_contains", { "chat_id": chat_id })
+  teams_steam = team_document_ref.stream()
+
+  def convert_snapshot_to_dict(team):
+    return team.to_dict()
+
+  teams = list(map(convert_snapshot_to_dict, teams_steam))
+
+  return teams;
