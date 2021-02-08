@@ -1,4 +1,4 @@
-def create_team(team):
+def generate_team(team):
   return {
     "id": team["idTeam"],
     "name": team["strTeam"],

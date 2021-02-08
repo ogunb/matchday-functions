@@ -22,7 +22,7 @@ def add_team_handler(chat_id, arguments):
     return
 
   def generateTelegramInlineKeyboardInputs(t):
-    team = models.team.create_team(t)
+    team = models.team.generate_team(t)
 
     update_team_metadata(team);
 

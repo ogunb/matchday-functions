@@ -1,14 +1,23 @@
 from google.cloud import firestore
 
 from models.user import generate_user
+from models.team import generate_team
+
+from api.sportsdb_api import fetch_team_with_id
 
 db = firestore.Client()
 
 def get_team_metadata(team_id):
   print(f"Getting {team_id}...")
   team_document_ref = db.collection("teams").document(str(team_id))
-  team = team_document_ref.get(["metadata"]).to_dict()
-  return team.get("metadata")
+  team = team_document_ref.get(["metadata"]).to_dict().get("metadata")
+
+  if not team:
+    teamDTO = fetch_team_with_id(team_id)
+    team = generate_team(teamDTO)
+    update_team_metadata(team)
+
+  return team
 
 def update_team_metadata(team):
   team_document_ref = db.collection("teams").document(str(team.get("id")))
