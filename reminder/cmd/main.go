@@ -7,14 +7,11 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/ogunb/matchday-functions/reminder"
 	"github.com/ogunb/matchday-functions/reminder/model"
 )
 
 func main() {
-	err := godotenv.Load(".env")
-
 	b, err := json.Marshal(&model.SmsRequest{
 		Phone:   os.Getenv("MY_NUMBER"),
 		Message: "LOL",
