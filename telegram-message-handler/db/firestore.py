@@ -24,8 +24,7 @@ def get_team_metadata(team_id):
 def query_teams(name):
     print(f"Query for {name}...")
     team_document_ref = db.collection("teams").limit(1).where(
-        u"metadata.name_lowercase", u"==",
-        slugify(name).lower())
+        u"metadata.name_slug", u"==", slugify(name))
 
     teams_stream = team_document_ref.stream()
 
@@ -37,14 +36,12 @@ def query_teams(name):
     return teams
 
 
-
 def update_team_metadata(team):
     team_document_ref = db.collection("teams").document(str(team.get("id")))
     team_document_ref.set(merge=True,
                           document_data={
                               u"metadata": {
-                                  **team, "name_lowercase":
-                                  team["name"].lower()
+                                  **team, "name_slug": slugify(team["name"])
                               }
                           })
 
