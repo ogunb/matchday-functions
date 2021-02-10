@@ -1,4 +1,4 @@
-from db.firestore import update_team_metadata
+from db.firestore import query_teams, update_team_metadata
 
 from api.telegram_api import send_message
 from api.sports_api import fetch_teams
@@ -16,9 +16,10 @@ def add_team_handler(chat_id, arguments):
                      text="Team name cannot be less then three letters.")
         return
 
-    print(f"Query for: {team_name}")
-    # TODO: query db first else:
-    teams = fetch_teams(team_name)
+    teams = query_teams(team_name)
+
+    if not teams:
+        teams = fetch_teams(team_name)
 
     if not teams or not len(teams) > 0:
         print(f"No team was found for search: {team_name}.")

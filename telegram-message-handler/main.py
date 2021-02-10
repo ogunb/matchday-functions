@@ -66,5 +66,3 @@ def telegram_message_handler(request):
 
     return "OK"
 
-
-get_team_metadata(549)

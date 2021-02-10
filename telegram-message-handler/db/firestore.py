@@ -1,4 +1,5 @@
 from google.cloud import firestore
+from slugify import slugify
 
 from models.user import generate_user
 
@@ -19,9 +20,33 @@ def get_team_metadata(team_id):
 
     return team
 
+
+def query_teams(name):
+    print(f"Query for {name}...")
+    team_document_ref = db.collection("teams").limit(1).where(
+        u"metadata.name_lowercase", u"==",
+        slugify(name).lower())
+
+    teams_stream = team_document_ref.stream()
+
+    def get_team_metadata(team):
+        return team.to_dict().get("metadata")
+
+    teams = list(map(get_team_metadata, teams_stream))
+
+    return teams
+
+
+
 def update_team_metadata(team):
     team_document_ref = db.collection("teams").document(str(team.get("id")))
-    team_document_ref.set(merge=True, document_data={u"metadata": team})
+    team_document_ref.set(merge=True,
+                          document_data={
+                              u"metadata": {
+                                  **team, "name_lowercase":
+                                  team["name"].lower()
+                              }
+                          })
 
 
 def add_follower(team_id, chat_id):
@@ -50,11 +75,11 @@ def get_user_teams(chat_id):
     team_document_ref = db.collection("teams").where("followers",
                                                      "array_contains",
                                                      {"chat_id": chat_id})
-    teams_steam = team_document_ref.stream()
+    teams_stream = team_document_ref.stream()
 
     def get_team_metadata(team):
         return team.to_dict().get("metadata")
 
-    teams = list(map(get_team_metadata, teams_steam))
+    teams = list(map(get_team_metadata, teams_stream))
 
     return teams
