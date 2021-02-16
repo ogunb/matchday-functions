@@ -8,7 +8,7 @@ type Fixture struct {
 }
 
 type Team struct {
-	ID int `json:"id"`
+	ID int64 `json:"id"`
 	Name string `json:"name"`
 }
 
