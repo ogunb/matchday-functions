@@ -14,6 +14,7 @@ func main() {
 	//firestore.GetTeamsWithFollowers()
 	team := model.Team{ID: 1233, Name: "1233"}
 	queue := services.NewQueueService()
-	queue.CreateQueue(team)
+	queuePath := queue.GenerateQueuePath(team)
+	queue.CreateQueue(queuePath)
 	//fmt.Printf("%v", fixture)
 }

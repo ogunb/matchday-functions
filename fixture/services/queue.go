@@ -36,30 +36,33 @@ func NewQueueService() *QueueService {
 
 var locationPath = fmt.Sprintf("projects/%s/locations/%s", os.Getenv("PROJECT_ID"), os.Getenv("LOCATION"))
 
-func getQueuePath(queueName string) string {
-	return fmt.Sprintf("%s/queues/%s", locationPath, queueName)
-}
-
-func (s *QueueService) GenerateQueueName(team model.Team) string {
+func generateQueueName(team model.Team) string {
 	return fmt.Sprintf("%v-%s", team.ID, team.Name)
 }
 
-func (s *QueueService) CreateQueue(team model.Team) {
+func (s *QueueService) GetLocationPath() string {
+	return locationPath
+}
+
+func (s *QueueService) GenerateQueuePath(team model.Team) string {
+	return fmt.Sprintf("%s/queues/%s", locationPath, generateQueueName(team))
+}
+
+func (s *QueueService) CreateQueue(queuePath string) {
 	ctx := context.Background()
-	queueName := s.GenerateQueueName(team)
-	req := &tasks.CreateQueueRequest{Parent: locationPath, Queue: &tasks.Queue{Name: getQueuePath(queueName)}}
+	req := &tasks.CreateQueueRequest{Parent: locationPath, Queue: &tasks.Queue{Name: queuePath}}
 	_, err := s.client.CreateQueue(ctx, req)
 	if err != nil {
 		log.Println(err.Error())
 	}
 }
 
-func (s *QueueService) PurgeQueue(queueName string) {
-	log.Printf("Purging tasks for %s...\n", queueName)
+func (s *QueueService) PurgeQueue(queuePath string) {
+	log.Printf("Purging tasks for %s...\n", queuePath)
 	ctx := context.Background()
 
 	req := &tasks.PurgeQueueRequest{
-		Name: getQueuePath(queueName),
+		Name: queuePath,
 	}
 
 	_, purgeErr := s.client.PurgeQueue(ctx, req)
@@ -68,7 +71,7 @@ func (s *QueueService) PurgeQueue(queueName string) {
 		log.Fatal(purgeErr)
 	}
 
-	log.Printf("Purged tasks successfully for %s\n", queueName)
+	log.Printf("Purged tasks successfully for %s\n", queuePath)
 
 	time.Sleep(2 * time.Second)
 }
