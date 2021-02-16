@@ -9,7 +9,6 @@ import (
 
 var sportsAPI = apis.NewSportsService()
 
-// FetchFixtures fetches next 5 events for given team
 func FetchFixtures(w http.ResponseWriter, r *http.Request) {
 
 	fixture := sportsAPI.FetchNotStartedMatches("549")

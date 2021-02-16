@@ -6,6 +6,7 @@ type Status struct {
 }
 
 type Fixture struct {
+	ID        int64  `json:"id"`
 	Timestamp int64  `json:"timestamp"`
 	Status    Status `json:"status"`
 }

@@ -45,13 +45,15 @@ func (s *QueueService) CreateTask(queuePath string, teamID int64, fixture model.
 
 	req := createTaskRequest(fixture.Timestamp-FIVE_MINS_IN_UNIX, queuePath)
 	type body struct {
-		Event  string `json:"event"`
-		TeamID int64  `json:"teamId"`
+		Event     string `json:"event"`
+		TeamID    int64  `json:"teamId"`
+		FixtureID int64  `json:"fixtureId"`
 	}
 
 	req.Task.GetHttpRequest().Body, _ = json.Marshal(&body{
-		Event:  event,
-		TeamID: teamID,
+		Event:     event,
+		TeamID:    teamID,
+		FixtureID: fixture.ID,
 	})
 
 	_, createErr := s.client.CreateTask(ctx, req)
