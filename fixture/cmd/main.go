@@ -13,8 +13,12 @@ func main() {
 	//firestore := db.NewFirestoreService()
 	//firestore.GetTeamsWithFollowers()
 	team := model.Team{ID: 1233, Name: "1233"}
+	teams := model.Teams{Home: team, Away: team}
+	fixture := model.Fixture{Timestamp: 1233, Status: model.Status{Long: "Not Started"}}
+	//team := model.Team{ID: 1233, Name: "1233"}
 	queue := services.NewQueueService()
 	queuePath := queue.GenerateQueuePath(team)
-	queue.CreateQueue(queuePath)
+	queue.CreateTask(queuePath, team.ID, fixture, teams)
+	//queue.CreateQueue(queuePath)
 	//fmt.Printf("%v", fixture)
 }
