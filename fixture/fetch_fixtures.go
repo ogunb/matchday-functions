@@ -11,6 +11,7 @@ import (
 
 
 func FetchFixtures(w http.ResponseWriter, r *http.Request) {
+	teamService := services.NewTeamService()
 	firestore := services.NewFirestoreService()
 	teams, err := firestore.GetTeamsWithFollowers()
 
@@ -24,7 +25,6 @@ func FetchFixtures(w http.ResponseWriter, r *http.Request) {
 	for _, team := range *teams {
 		go func(team model.Team) {
 			defer wg.Done()
-			teamService := services.NewTeamService()
 			teamService.CreateTeamEventTasks(team)
 		}(team)
 	}
