@@ -1,10 +1,11 @@
 package apis
 
 import (
-	"github.com/dghubble/sling"
-	"github.com/ogunb/matchday-functions/fixture/model"
 	"log"
 	"os"
+
+	"github.com/dghubble/sling"
+	"github.com/ogunb/matchday-functions/fixture/model"
 )
 
 const baseURL = "https://v3.football.api-sports.io"
@@ -19,9 +20,9 @@ func NewSportsService() *SportsService {
 	}
 }
 
-func (s *SportsService) FetchNotStartedMatches(teamID string) *model.FixtureResponse {
+func (s *SportsService) FetchNotStartedMatches(teamID int64) *model.FixtureResponse {
 	type FixtureParams struct {
-		Team   string `url:"team,omitEmpty"`
+		Team   int64 	`url:"team,omitEmpty"`
 		Next   int    `url:"next"`
 		Status string `url:"status"`
 	}

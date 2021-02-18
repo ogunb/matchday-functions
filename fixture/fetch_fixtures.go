@@ -1,28 +1,15 @@
 package fixture
 
 import (
-	"fmt"
 	"net/http"
 
-	"github.com/ogunb/matchday-functions/fixture/apis"
+	"github.com/ogunb/matchday-functions/fixture/model"
+	"github.com/ogunb/matchday-functions/fixture/services"
 )
 
-var sportsAPI = apis.NewSportsService()
 
 func FetchFixtures(w http.ResponseWriter, r *http.Request) {
-
-	fixture := sportsAPI.FetchNotStartedMatches("549")
-	fmt.Printf("%v", fixture)
-	//
-	//if len(fixture) == 0 {
-	//	log.Fatal("No event was found.")
-	//}
-	//
-	//services.PurgeQueue()
-	//
-	//for _, fixture := range fixture {
-	//	if fixture.Status == "Not Started" {
-	//		services.CreateTask(fixture)
-	//	}
-	//}
+	teamService := services.NewTeamService()
+	team := &model.Team{ID: 549, Name: "Besiktas"}
+	teamService.CreateTeamEventTasks(*team)
 }

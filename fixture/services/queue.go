@@ -49,13 +49,26 @@ func (s *QueueService) GenerateQueuePath(team model.Team) string {
 	return fmt.Sprintf("%s/queues/%s", locationPath, generateQueueName(team))
 }
 
+func (s *QueueService) GetQueue(queuePath string) (*tasks.Queue, error) {
+	ctx := context.Background()
+	req := &tasks.GetQueueRequest{Name: queuePath}
+	return s.client.GetQueue(ctx, req)
+}
+
+func (s *QueueService) DoesQueueExist(queuePath string) bool {
+	_, err := s.GetQueue(queuePath)
+
+	if err != nil {
+		return false
+	}
+
+	return true
+}
+
 func (s *QueueService) CreateQueue(queuePath string) {
 	ctx := context.Background()
 	req := &tasks.CreateQueueRequest{Parent: locationPath, Queue: &tasks.Queue{Name: queuePath}}
-	_, err := s.client.CreateQueue(ctx, req)
-	if err != nil {
-		log.Println(err)
-	}
+	s.client.CreateQueue(ctx, req)
 }
 
 func (s *QueueService) PurgeQueue(queuePath string) {

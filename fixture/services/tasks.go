@@ -44,7 +44,7 @@ func (s *QueueService) CreateTask(queuePath string, teamID int64, fixture model.
 
 	log.Println(fmt.Sprintf("Creating task for %s...", event))
 
-	req := createTaskRequest(fixture.Timestamp-fiveMinsInUnix, queuePath)
+	req := createTaskRequest(fixture.Timestamp - fiveMinsInUnix, queuePath)
 
 	type body struct {
 		Event     string `json:"event"`
