@@ -29,7 +29,7 @@ func (s *SportsService) FetchNotStartedMatches(teamID int64) *model.FixtureRespo
 
 	queryParams := &FixtureParams{
 		Team:   teamID,
-		Next:   10,
+		Next:   6,
 		Status: "NS", // Not Started
 	}
 

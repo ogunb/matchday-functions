@@ -38,7 +38,7 @@ func NewQueueService() *QueueService {
 var locationPath = fmt.Sprintf("projects/%s/locations/%s", os.Getenv("PROJECT_ID"), os.Getenv("LOCATION"))
 
 func generateQueueName(team model.Team) string {
-	return fmt.Sprintf("%v-%s", team.ID, team.Name)
+	return fmt.Sprintf("%v-%v", team.Name, team.ID)
 }
 
 func (s *QueueService) GetLocationPath() string {
