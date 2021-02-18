@@ -1,12 +1,13 @@
 package services
 
 import (
-	"cloud.google.com/go/firestore"
 	"context"
-	"github.com/ogunb/matchday-functions/fixture/model"
-	"google.golang.org/api/iterator"
 	"log"
 	"os"
+
+	"cloud.google.com/go/firestore"
+	"github.com/ogunb/matchday-functions/fixture/model"
+	"google.golang.org/api/iterator"
 )
 
 func createClient(ctx context.Context) *firestore.Client {
@@ -34,7 +35,7 @@ func NewFirestoreService() *FirestoreService {
 	}
 }
 
-func (s *FirestoreService) GetTeamsWithFollowers() ([]model.Team, error) {
+func (s *FirestoreService) GetTeamsWithFollowers() (*[]model.Team, error) {
 	ctx := context.Background()
 
 	iter := s.client.Collection("teams").OrderBy("followers", firestore.Desc).Documents(ctx)
@@ -67,5 +68,5 @@ func (s *FirestoreService) GetTeamsWithFollowers() ([]model.Team, error) {
 		})
 	}
 
-	return teams, nil
+	return &teams, nil
 }

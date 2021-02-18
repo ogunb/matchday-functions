@@ -3,18 +3,19 @@ package services
 import (
 	"context"
 	"fmt"
-	"github.com/ogunb/matchday-functions/fixture/model"
 	"log"
 	"os"
 	"time"
+
+	"github.com/ogunb/matchday-functions/fixture/model"
 
 	cloudtasks "cloud.google.com/go/cloudtasks/apiv2"
 	"google.golang.org/genproto/googleapis/cloud/tasks/v2"
 )
 
 const (
-	THREE_HOURS_IN_UNIX = 60 * 60 * 3
-	FIVE_MINS_IN_UNIX   = 60 * 5
+	threeHoursInUnix = 60 * 60 * 3
+	fiveMinsInUnix   = 60 * 5
 )
 
 type QueueService struct {
@@ -53,7 +54,7 @@ func (s *QueueService) CreateQueue(queuePath string) {
 	req := &tasks.CreateQueueRequest{Parent: locationPath, Queue: &tasks.Queue{Name: queuePath}}
 	_, err := s.client.CreateQueue(ctx, req)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println(err)
 	}
 }
 

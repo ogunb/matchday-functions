@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
+
 	"github.com/ogunb/matchday-functions/fixture/model"
 	"google.golang.org/genproto/googleapis/cloud/tasks/v2"
 	"google.golang.org/protobuf/types/known/timestamppb"
-	"os"
 
 	"log"
 )
@@ -43,7 +44,8 @@ func (s *QueueService) CreateTask(queuePath string, teamID int64, fixture model.
 
 	log.Println(fmt.Sprintf("Creating task for %s...", event))
 
-	req := createTaskRequest(fixture.Timestamp-FIVE_MINS_IN_UNIX, queuePath)
+	req := createTaskRequest(fixture.Timestamp-fiveMinsInUnix, queuePath)
+
 	type body struct {
 		Event     string `json:"event"`
 		TeamID    int64  `json:"teamId"`
