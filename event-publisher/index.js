@@ -1,6 +1,13 @@
 function publishEvent(req, res) {
-  let message = req.query.message || req.body.message || 'Hello World!';
-  res.status(200).send(message);
+  const {
+    topicName,
+    ...rest
+  } = req.body;
+
+  console.log(topicName)
+  console.log(rest)
+
+  res.status(200).send("lol");
 }
 
 exports.publishEvent = publishEvent;
