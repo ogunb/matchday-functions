@@ -1,11 +1,10 @@
 function publishEvent(req, res) {
-  // const {
-  //   topicName,
-  //   ...rest
-  // } = req.body;
+  const {
+    topicName,
+    ...rest
+  } = req.body;
 
-  console.log(req)
-  // console.log(rest)
+  console.log({ topicName, rest })
 
   res.status(200).send("lol");
 }
