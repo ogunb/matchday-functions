@@ -28,6 +28,9 @@ func createTaskRequest(timestamp int64, queuePath string) *tasks.CreateTaskReque
 							ServiceAccountEmail: os.Getenv("SERVICE_ACCOUNT_EMAIL"),
 						},
 					},
+					Headers: map[string]string{
+						"Content-Type": "application/json",
+					},
 				},
 			},
 		},
