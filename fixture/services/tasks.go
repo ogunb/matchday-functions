@@ -48,6 +48,6 @@ func (s *QueueService) CreateTask(queuePath string, timestamp int64, data interf
 	_, createErr := s.client.CreateTask(ctx, req)
 
 	if createErr != nil {
-		log.Fatal(createErr)
+		log.Fatal("Creating task failed:", createErr)
 	}
 }

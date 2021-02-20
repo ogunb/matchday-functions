@@ -16,7 +16,7 @@ func FetchFixtures(w http.ResponseWriter, r *http.Request) {
 	teams, err := firestore.GetTeamsWithFollowers()
 
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Getting teams from db failed:", err)
 	}
 
 	var wg sync.WaitGroup

@@ -20,7 +20,7 @@ func NewQueueService() *QueueService {
 	client, err := cloudtasks.NewClient(ctx)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Initializing queue service failed:", err)
 	}
 
 	return &QueueService{
@@ -67,7 +67,7 @@ func (s *QueueService) PurgeQueue(queuePath string) {
 	_, purgeErr := s.client.PurgeQueue(ctx, req)
 
 	if purgeErr != nil {
-		log.Fatal(purgeErr)
+		log.Fatal("Purging queue failed", purgeErr)
 	}
 
 	log.Printf("Purged tasks successfully for %s\n", queuePath)
