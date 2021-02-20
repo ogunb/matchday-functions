@@ -7,15 +7,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/ogunb/matchday-functions/fixture/model"
-
 	cloudtasks "cloud.google.com/go/cloudtasks/apiv2"
 	"google.golang.org/genproto/googleapis/cloud/tasks/v2"
-)
-
-const (
-	threeHoursInUnix = 60 * 60 * 3
-	fiveMinsInUnix   = 60 * 5
 )
 
 type QueueService struct {
@@ -37,16 +30,8 @@ func NewQueueService() *QueueService {
 
 var locationPath = fmt.Sprintf("projects/%s/locations/%s", os.Getenv("PROJECT_ID"), os.Getenv("LOCATION"))
 
-func generateQueueName(team model.Team) string {
-	return fmt.Sprintf("%v-%v", team.Name, team.ID)
-}
-
 func (s *QueueService) GetLocationPath() string {
 	return locationPath
-}
-
-func (s *QueueService) GenerateQueuePath(team model.Team) string {
-	return fmt.Sprintf("%s/queues/%s", locationPath, generateQueueName(team))
 }
 
 func (s *QueueService) GetQueue(queuePath string) (*tasks.Queue, error) {

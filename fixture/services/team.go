@@ -1,7 +1,9 @@
 package services
 
 import (
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/ogunb/matchday-functions/fixture/apis"
@@ -28,7 +30,7 @@ func (s *TeamService) CreateTeamEventTasks(team model.Team) {
 		log.Fatal("No event was found.")
 	}
 
-	queuePath := s.queueService.GenerateQueuePath(team)
+	queuePath := s.GenerateQueuePath(team)
 	queueExists := s.queueService.DoesQueueExist(queuePath)
 
 	if !queueExists {
@@ -41,6 +43,30 @@ func (s *TeamService) CreateTeamEventTasks(team model.Team) {
 
 
 	for _, fixture := range fixture {
-		s.queueService.CreateTask(queuePath, team.ID, fixture.Fixture, fixture.Teams)
+		type data struct {
+			Event     string `json:"event"`
+			TeamID    int64  `json:"teamId"`
+			FixtureID int64  `json:"fixtureId"`
+			TopicName string `json:"topicName"`
+		}
+
+		body := &data{
+			Event: fmt.Sprintf("%s vs. %s", fixture.Teams.Home.Name, fixture.Teams.Away.Name),
+			TeamID: team.ID,
+			FixtureID: fixture.Fixture.ID,
+			TopicName: os.Getenv("MATCHDAY_EVENT_TOPIC"),
+		}
+
+		scheduleTime := fixture.Fixture.Timestamp - 60 * 5
+
+		s.queueService.CreateTask(queuePath, scheduleTime, body)
 	}
+}
+
+func (s *TeamService) GenerateQueuePath(team model.Team) string {
+	return fmt.Sprintf("%s/queues/%s", locationPath, generateQueueName(team))
+}
+
+func generateQueueName(team model.Team) string {
+	return fmt.Sprintf("%v-%v", team.Name, team.ID)
 }

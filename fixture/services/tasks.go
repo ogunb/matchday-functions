@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ogunb/matchday-functions/fixture/model"
 	"google.golang.org/genproto/googleapis/cloud/tasks/v2"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
@@ -37,26 +36,14 @@ func createTaskRequest(timestamp int64, queuePath string) *tasks.CreateTaskReque
 	return req
 }
 
-func (s *QueueService) CreateTask(queuePath string, teamID int64, fixture model.Fixture, teams model.Teams) {
+func (s *QueueService) CreateTask(queuePath string, timestamp int64, data interface{}) {
 	ctx := context.Background()
 
-	event := fmt.Sprintf("%s vs. %s", teams.Home.Name, teams.Away.Name)
+	log.Println(fmt.Sprintf("Creating task for %s...", queuePath))
 
-	log.Println(fmt.Sprintf("Creating task for %s...", event))
+	req := createTaskRequest(timestamp, queuePath)
 
-	req := createTaskRequest(fixture.Timestamp - fiveMinsInUnix, queuePath)
-
-	type body struct {
-		Event     string `json:"event"`
-		TeamID    int64  `json:"teamId"`
-		FixtureID int64  `json:"fixtureId"`
-	}
-
-	req.Task.GetHttpRequest().Body, _ = json.Marshal(&body{
-		Event:     event,
-		TeamID:    teamID,
-		FixtureID: fixture.ID,
-	})
+	req.Task.GetHttpRequest().Body, _ = json.Marshal(data)
 
 	_, createErr := s.client.CreateTask(ctx, req)
 
