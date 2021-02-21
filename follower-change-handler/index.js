@@ -7,12 +7,13 @@ exports.handleFollowerChange = (event, context) => {
 
   const hadZeroFollowers = !oldFollowers || oldFollowers.length === 0
   const hasMoreThanOneFollowers = !!currentFollowers && currentFollowers.length >= 1
-
+  console.log(event.value.fields.metadata)
   if (hadZeroFollowers && hasMoreThanOneFollowers) {
-    // TODO
-    // Team service > create match tasks
-  } else if (!hadZeroFollowers && !hasMoreThanOneFollowers) {
-    // TODO
-    // Team service > purge match tasks
+    // fetch(`${process.env.PROJECT_URL}/team-fixture-handler`, {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+
+    //   })
+    // })
   }
 };
