@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 exports.handleFollowerChange = (event, context) => {
   const resource = context.resource;
   console.log('Function triggered by change to: ' +  resource);
