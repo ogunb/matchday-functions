@@ -1,3 +1,3 @@
 export GOOGLE_APPLICATION_CREDENTIALS=""
-export TEAM_ENDPOINT=""
+export PROJECT_URL=""
 export PROJECT_ID=""
