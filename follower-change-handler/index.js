@@ -7,16 +7,19 @@ exports.handleFollowerChange = (event, context) => {
 
   const hadZeroFollowers = !oldFollowers || oldFollowers.length === 0
   const hasMoreThanOneFollowers = !!currentFollowers && currentFollowers.length >= 1
-  console.log(event.value.fields.metadata.mapValue.fields.id)
-  console.log(event.value.fields.metadata.mapValue.fields.id.value.integerValue)
-  console.log(event.value.fields.metadata.mapValue.fields.name)
-  console.log(event.value.fields.metadata.mapValue.fields.name.value.stringValue)
-  if (hadZeroFollowers && hasMoreThanOneFollowers) {
-    // fetch(`${process.env.PROJECT_URL}/team-fixture-handler`, {
-    //   method: 'POST',
-    //   body: JSON.stringify({
 
-    //   })
-    // })
+  if (hadZeroFollowers && hasMoreThanOneFollowers) {
+    const id = Number(event.value.fields.metadata.mapValue.fields.id.integerValue);
+    const name = event.value.fields.metadata.mapValue.fields.name.stringValue;
+
+    console.log({ id, name })
+
+    fetch(`${process.env.PROJECT_URL}/team-fixture-handler`, {
+      method: 'POST',
+      body: JSON.stringify({
+        id,
+        name,
+      })
+    })
   }
 };
