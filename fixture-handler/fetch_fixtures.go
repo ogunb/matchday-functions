@@ -3,9 +3,7 @@ package fixture
 import (
 	"log"
 	"net/http"
-	"sync"
 
-	"github.com/ogunb/matchday-functions/fixture/model"
 	"github.com/ogunb/matchday-functions/fixture/services"
 )
 
@@ -19,15 +17,8 @@ func FetchFixtures(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("Getting teams from db failed:", err)
 	}
 
-	var wg sync.WaitGroup
-	wg.Add(len(*teams))
 
 	for _, team := range *teams {
-		go func(team model.Team) {
-			defer wg.Done()
-			teamService.CreateTeamEventTasks(team)
-		}(team)
+		teamService.CreateTeamEventTasks(team)
 	}
-
-	wg.Wait()
 }
