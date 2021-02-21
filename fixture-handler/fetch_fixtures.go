@@ -23,7 +23,7 @@ func FetchFixtures(w http.ResponseWriter, r *http.Request) {
 	wg.Add(len(*teams))
 
 	for _, team := range *teams {
-		go func(team model.Team) {			teamService.CreateTeamEventTasks(team)
+		go func(team model.Team) {
 			defer wg.Done()
 			teamService.CreateTeamEventTasks(team)
 		}(team)
