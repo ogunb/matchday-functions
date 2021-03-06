@@ -1,4 +1,6 @@
 export BOT_BASIC_AUTH=""
 export GOOGLE_APPLICATION_CREDENTIALS=""
+export TWITTER_AUTH_TOKEN=""
+export TOTALLY_LEGIT_TWITTER_USER=""
 
 source env/bin/activate
